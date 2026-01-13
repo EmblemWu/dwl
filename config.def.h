@@ -129,6 +129,12 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 /* commands */
 static const char *termcmd[] = { "alacritty", "--option", "font.size=11.5", NULL };
 static const char *menucmd[] = { "wmenu-run", "-b", "-f", "Roboto Normal 13", NULL };
+static const char *brightnessup[] = { "brightnessctl", "set", "+5%", NULL };
+static const char *brightnessdown[] = { "brightnessctl", "set", "5%-", NULL };
+static const char *volup[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
+static const char *voldown[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
+static const char *volmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+static const char *micmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
 
 static const Key keys[] = {
 	/* Check https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h */
@@ -136,6 +142,14 @@ static const Key keys[] = {
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = termcmd} },
+	{ 0,                         XKB_KEY_XF86MonBrightnessUp,   spawn, {.v = brightnessup} },
+	{ 0,                         XKB_KEY_XF86MonBrightnessDown, spawn, {.v = brightnessdown} },
+	{ 0,                         XKB_KEY_XF86KbdBrightnessUp,   spawn, {.v = brightnessup} },
+	{ 0,                         XKB_KEY_XF86KbdBrightnessDown, spawn, {.v = brightnessdown} },
+	{ 0,                         XKB_KEY_XF86AudioRaiseVolume,  spawn, {.v = volup} },
+	{ 0,                         XKB_KEY_XF86AudioLowerVolume,  spawn, {.v = voldown} },
+	{ 0,                         XKB_KEY_XF86AudioMute,         spawn, {.v = volmute} },
+	{ 0,                         XKB_KEY_XF86AudioMicMute,      spawn, {.v = micmute} },
 	{ MODKEY,                    XKB_KEY_b,          togglebar,      {0} },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
