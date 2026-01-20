@@ -32,9 +32,10 @@ static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   monitor */
 	/* examples: */
 	{ "Gimp",     NULL,       0,            1,           -1 }, /* Start on currently visible tags floating, not tiled */
-	{ "firefox",  NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "9" */
-	{ "emacs",    NULL,       1 << 2,       0,           -1 },
-	{ "Telegram", NULL,       1 << 6,       0,           -1 }
+	{ "firefox",     NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "9" */
+	{ "emacs",       NULL,       1 << 2,       0,           -1 },
+	{ "Telegram",    NULL,       1 << 6,       0,           -1 },
+	{ "qutebrowser", NULL,       1 << 8,       0,           -1 },    
 };
 
 /* layout(s) */
