@@ -380,6 +380,7 @@ static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglefullscreen(const Arg *arg);
 static void togglescratchpad(const Arg *arg);
+static void togglescratchpad_spawn(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unlocksession(struct wl_listener *listener, void *data);
@@ -529,6 +530,21 @@ applyrules(Client *c)
 			}
 		}
 	}
+	    /* Auto-register scratchpad windows into scratchpad_clients */
+	if (appid && strstr(appid, "scratchpad")) {
+	  Client *sc;
+	  int found = 0;
+
+	  wl_list_for_each(sc, &scratchpad_clients, link_temp) {
+            if (sc == c) {
+	      found = 1;
+	      break;
+            }
+	  }
+	  if (!found)
+            wl_list_insert(&scratchpad_clients, &c->link_temp);
+	}
+
 	setmon(c, mon, newtags);
 }
 
@@ -2898,6 +2914,15 @@ spawn(const Arg *arg)
 		execvp(((char **)arg->v)[0], (char **)arg->v);
 		die("dwl: execvp %s failed:", ((char **)arg->v)[0]);
 	}
+}
+
+static void togglescratchpad_spawn(const Arg *arg)
+{
+  if (wl_list_empty(&scratchpad_clients)) {
+    spawn(arg);
+    return;
+  }
+  togglescratchpad(NULL);
 }
 
 void
