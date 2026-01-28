@@ -33,10 +33,12 @@ static const Rule rules[] = {
 	/* examples: */
 	{ "Gimp",     NULL,       0,            1,           -1 }, /* Start on currently visible tags floating, not tiled */
 	{ "firefox",     NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "9" */
-	{ "emacs",       NULL,       1 << 2,       0,           -1 },
+	{ "emacs",       NULL,       0,       0,           -1 },
+	{ "emacs", "emacs-float",    0,            1,           -1 },
 	{ "Telegram",    NULL,       1 << 6,       0,           -1 },
 	{ "qutebrowser", NULL,       1 << 8,       0,           -1 },
 	{ "scratchpad",  NULL,       0,            1,           -1 },
+
 };
 
 /* layout(s) */
@@ -138,6 +140,7 @@ static const char *voldown[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", 
 static const char *volmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 static const char *micmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
 static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", NULL };
+static const char *emacs_float[] = { "emacsclient", "--eval", "(my/type)", NULL };
 
 static const Key keys[] = {
 	/* Check https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h */
@@ -177,6 +180,7 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_z,          togglescratchpad, {0} },
 	{ MODKEY,                    XKB_KEY_z,          removescratchpad, {0} },
 	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT, XKB_KEY_i, togglescratchpad_spawn, {.v = scratchpadcmd }},
+	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT, XKB_KEY_e, togglescratchpad_spawn, {.v = emacs_float }},
 	{ MODKEY,                    XKB_KEY_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                    XKB_KEY_m,          setlayout,      {.v = &layouts[2]} },
