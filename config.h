@@ -140,13 +140,13 @@ static const char *volup[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5
 static const char *voldown[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
 static const char *volmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 static const char *micmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
-static const char *screenshot_clipboard_full[] = { "screenshot-clipboard-full.sh", NULL };
-static const char *screenshot_clipboard_area[] = { "screenshot-clipboard-area.sh", NULL };
-static const char *screenshot_file_full[] = { "screenshot-file-full.sh", NULL };
-static const char *screenshot_file_area[] = { "screenshot-file-area.sh", NULL };
+static const char *screenshot_clipboard_full[] = { "/bin/sh", "-c", "$HOME/.local/bin/screenshot-clipboard-full.sh", NULL };
+static const char *screenshot_clipboard_area[] = { "/bin/sh", "-c", "$HOME/.local/bin/screenshot-clipboard-area.sh", NULL };
+static const char *screenshot_file_full[] = { "/bin/sh", "-c", "$HOME/.local/bin/screenshot-file-full.sh", NULL };
+static const char *screenshot_file_area[] = { "/bin/sh", "-c", "$HOME/.local/bin/screenshot-file-area.sh", NULL };
 static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", NULL };
 static const char *emacs_float[] = { "emacsclient", "--eval", "(my/type)", NULL };
-static const char *dictcmd[] = { "dict.sh", NULL };
+static const char *dictcmd[] = { "/bin/sh", "-c", "$HOME/.local/bin/dict.sh", NULL };
 
 static const Key keys[] = {
 	/* Check https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h */
