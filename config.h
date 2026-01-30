@@ -140,6 +140,10 @@ static const char *volup[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5
 static const char *voldown[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
 static const char *volmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 static const char *micmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
+static const char *screenshot_clipboard_full[] = { "/home/emblem/dwl/sh/screenshot-clipboard-full.sh", NULL };
+static const char *screenshot_clipboard_area[] = { "/home/emblem/dwl/sh/screenshot-clipboard-area.sh", NULL };
+static const char *screenshot_file_full[] = { "/home/emblem/dwl/sh/screenshot-file-full.sh", NULL };
+static const char *screenshot_file_area[] = { "/home/emblem/dwl/sh/screenshot-file-area.sh", NULL };
 static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", NULL };
 static const char *emacs_float[] = { "emacsclient", "--eval", "(my/type)", NULL };
 static const char *dictcmd[] = { "/home/emblem/dwl/sh/dict.sh", NULL };
@@ -160,14 +164,12 @@ static const Key keys[] = {
 	{ 0,                         XKB_KEY_XF86AudioMicMute,      spawn, {.v = micmute} },
 	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_space,        spawn, {.v = dictcmd} },
 	/* macOS-like screenshots (Alt as "Command") -> clipboard */
-	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_numbersign,      spawn, SHCMD("grim - | wl-copy") },
-	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_dollar,          spawn, SHCMD("slurp | xargs -I {} grim -g '{}' - | wl-copy") },
+	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_numbersign,      spawn, {.v = screenshot_clipboard_full} },
+	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_dollar,          spawn, {.v = screenshot_clipboard_area} },
 
 /* Alt+Shift+Ctrl+3/4 -> file */
-	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_numbersign,     spawn,
-	  SHCMD("mkdir -p \"$HOME/Pictures/Screenshots\"; grim \"$HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png\"") },
-	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_dollar,          spawn,
-	  SHCMD("mkdir -p \"$HOME/Pictures/Screenshots\"; slurp | xargs -I {} grim -g '{}' \"$HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png\"") },
+	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_numbersign,     spawn, {.v = screenshot_file_full} },
+	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_dollar,          spawn, {.v = screenshot_file_area} },
 
 	{ MODKEY,                    XKB_KEY_b,          togglebar,      {0} },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
