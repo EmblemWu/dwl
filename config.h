@@ -162,7 +162,7 @@ static const Key keys[] = {
 	{ 0,                         XKB_KEY_XF86AudioLowerVolume,  spawn, {.v = voldown} },
 	{ 0,                         XKB_KEY_XF86AudioMute,         spawn, {.v = volmute} },
 	{ 0,                         XKB_KEY_XF86AudioMicMute,      spawn, {.v = micmute} },
-	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_space,        spawn, {.v = dictcmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,                     spawn, {.v = dictcmd} },
 	/* macOS-like screenshots (Alt as "Command") -> clipboard */
 	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_numbersign,      spawn, {.v = screenshot_clipboard_full} },
 	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_dollar,          spawn, {.v = screenshot_clipboard_area} },
