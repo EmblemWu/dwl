@@ -35,6 +35,7 @@ static const Rule rules[] = {
 	{ "firefox",     NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "9" */
 	{ "emacs",       NULL,       0,       0,           -1 },
 	{ "emacs", "emacs-float",    0,            1,           -1 },
+	{ NULL,      "Dict",     0,            1,           -1 },
 	{ "Telegram",    NULL,       1 << 6,       0,           -1 },
 	{ "qutebrowser", NULL,       1 << 8,       0,           -1 },
 	{ "scratchpad",  NULL,       0,            1,           -1 },
@@ -141,6 +142,9 @@ static const char *volmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "t
 static const char *micmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
 static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", NULL };
 static const char *emacs_float[] = { "emacsclient", "--eval", "(my/type)", NULL };
+static const char *dictcmd[] = { "/bin/sh", "-c",
+	"word=\"$(wmenu -p 'Dict:')\"; [ -n \"$word\" ] && alacritty -t Dict -o font.size=17 -e sh -c \"sdcv --color \\\"$word\\\" | less -R\"",
+	NULL };
 
 static const Key keys[] = {
 	/* Check https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h */
@@ -156,6 +160,7 @@ static const Key keys[] = {
 	{ 0,                         XKB_KEY_XF86AudioLowerVolume,  spawn, {.v = voldown} },
 	{ 0,                         XKB_KEY_XF86AudioMute,         spawn, {.v = volmute} },
 	{ 0,                         XKB_KEY_XF86AudioMicMute,      spawn, {.v = micmute} },
+	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_space,        spawn, {.v = dictcmd} },
 	/* macOS-like screenshots (Alt as "Command") -> clipboard */
 	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_numbersign,      spawn, SHCMD("grim - | wl-copy") },
 	{ WLR_MODIFIER_ALT|WLR_MODIFIER_SHIFT, XKB_KEY_dollar,          spawn, SHCMD("slurp | xargs -I {} grim -g '{}' - | wl-copy") },
