@@ -142,9 +142,7 @@ static const char *volmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "t
 static const char *micmute[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL };
 static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", NULL };
 static const char *emacs_float[] = { "emacsclient", "--eval", "(my/type)", NULL };
-static const char *dictcmd[] = { "/bin/sh", "-c",
-	"word=\"$(wmenu -p 'Dict:')\"; [ -n \"$word\" ] && alacritty -t Dict -o font.size=17 -e sh -c \"sdcv --color \\\"$word\\\" | less -R\"",
-	NULL };
+static const char *dictcmd[] = { "/home/emblem/dwl/sh/dict.sh", NULL };
 
 static const Key keys[] = {
 	/* Check https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h */
