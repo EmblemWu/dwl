@@ -837,6 +837,11 @@ chvt(const Arg *arg)
 void
 checkidleinhibitor(struct wlr_surface *exclude)
 {
+	if (!enable_idle_inhibit || !idle_inhibit_mgr) {
+		wlr_idle_notifier_v1_set_inhibited(idle_notifier, 0);
+		return;
+	}
+
 	int inhibited = 0, unused_lx, unused_ly;
 	struct wlr_idle_inhibitor_v1 *inhibitor;
 	wl_list_for_each(inhibitor, &idle_inhibit_mgr->inhibitors, link) {
@@ -1066,6 +1071,9 @@ createdecoration(struct wl_listener *listener, void *data)
 void
 createidleinhibitor(struct wl_listener *listener, void *data)
 {
+	if (!enable_idle_inhibit)
+		return;
+
 	struct wlr_idle_inhibitor_v1 *idle_inhibitor = data;
 	LISTEN_STATIC(&idle_inhibitor->events.destroy, destroyidleinhibitor);
 
@@ -1399,6 +1407,9 @@ destroydragicon(struct wl_listener *listener, void *data)
 void
 destroyidleinhibitor(struct wl_listener *listener, void *data)
 {
+	if (!enable_idle_inhibit)
+		return;
+
 	/* `data` is the wlr_surface of the idle inhibitor being destroyed,
 	 * at this point the idle inhibitor is still in the list of the manager */
 	checkidleinhibitor(wlr_surface_get_root_surface(data));
@@ -2798,8 +2809,10 @@ setup(void)
 
 	idle_notifier = wlr_idle_notifier_v1_create(dpy);
 
-	idle_inhibit_mgr = wlr_idle_inhibit_v1_create(dpy);
-	LISTEN_STATIC(&idle_inhibit_mgr->events.new_inhibitor, createidleinhibitor);
+	if (enable_idle_inhibit) {
+		idle_inhibit_mgr = wlr_idle_inhibit_v1_create(dpy);
+		LISTEN_STATIC(&idle_inhibit_mgr->events.new_inhibitor, createidleinhibitor);
+	}
 
 	session_lock_mgr = wlr_session_lock_manager_v1_create(dpy);
 	wl_signal_add(&session_lock_mgr->events.new_lock, &lock_listener);
