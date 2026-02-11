@@ -40,7 +40,8 @@ static const Rule rules[] = {
 	{ "Telegram",    NULL,       1 << 6,       0,           -1 },
 	{ "qutebrowser", NULL,       1 << 8,       0,           -1 },
 	{ "scratchpad",  NULL,       0,            1,           -1 },
-
+	{ "swayimg",     NULL,       0,            1,           -1 },
+	{ "mpv",         NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -145,7 +146,7 @@ static const char *screenshot_clipboard_full[] = { "/bin/sh", "-c", "$HOME/.conf
 static const char *screenshot_clipboard_area[] = { "/bin/sh", "-c", "$HOME/.config/sh/screenshot-clipboard-area.sh", NULL };
 static const char *screenshot_file_full[] = { "/bin/sh", "-c", "$HOME/.config/sh/screenshot-file-full.sh", NULL };
 static const char *screenshot_file_area[] = { "/bin/sh", "-c", "$HOME/.config/sh/screenshot-file-area.sh", NULL };
-static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", "--option", "font.size=15", NULL };
+static const char *scratchpadcmd[] = { "alacritty", "--class", "scratchpad", "--option", "font.size=15", "window.opacity=0.9", NULL };
 static const char *emacs_float[] = { "emacsclient", "--eval", "(my/type)", NULL };
 static const char *dictcmd[] = { "/bin/sh", "-c", "$HOME/.config/sh/dict.sh", NULL };
 
